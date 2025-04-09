@@ -36,6 +36,11 @@
       onload="this.onload=null;this.rel='stylesheet'"
     />
 
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+
     <noscript
       ><link
         href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&amp;family=Poppins:wght@300;400;500;600;700&amp;display=swap"
@@ -66,7 +71,7 @@
     <link href="assets-bt/css/plugins.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="assets-bt/css/style.css" />
-    <!-- 
+
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -74,1399 +79,89 @@
         margin: 0;
         padding: 0;
       }
-
-      /* Chatbot Icons */
-      .chatbot-icon {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        /* background: #007bff; */
-        color: white;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 24px;
-        cursor: pointer;
-        /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); */
-        box-shadow: 28px 28px 56px #927f7f, -28px -28px 56px #c6abab;
-      }
-
-      /* Chatbot Container (Hidden by default) */
-      .chatbot-container {
-        position: fixed;
-        /* bottom: 10px; */
-        right: 20px;
-        width: 350px;
-        background: linear-gradient(to bottom, #f0f8ff, #e6e6fa);
-
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
+      .info-box {
+        position: absolute;
+        bottom: 35px; /* 👈 position ABOVE the ! icon */
+        left: 0;
+        background-color: rgb(240, 234, 234);
+        border-radius: 8px;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
+        padding: 10px;
+        z-index: 999;
         display: none;
-        flex-direction: column;
-
-        position: fixed;
-        /* bottom: 10px; */
-        right: 20px;
-        width: 350px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        display: none; /* Initially hidden */
-        flex-direction: column;
-
-        /* Add transition for smooth effect */
-        opacity: 0;
-        transform: scale(0.8);
-        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+        width: 260px;
       }
 
-      /* Chat Header */
-      .chat-header {
-        background: #007bff;
-        color: white;
-        padding: 10px;
-        text-align: center;
-        font-size: 18px;
-        font-weight: bold;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .close-btn {
-        cursor: pointer;
-        font-size: 20px;
-        padding: 0 3px;
-      }
-
-      /* Chat Messages */
-      .chat-messages {
-        /* border: 2px solid red; */
-        height: 300px;
-        overflow-y: auto;
-        padding: 10px;
-        /* background: #; */
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start; /* Ensure messages stack properly */
-        scroll-behavior: smooth; /* Smooth scrolling */
-      }
-      .chat-messages::-webkit-scrollbar {
-        display: none;
-      }
-
-      .message {
-        padding: 8px;
-        border-radius: 5px;
-        margin: 5px 0;
-        max-width: 80%;
-      }
-
-      .user-message {
-        background: #007bff;
-        color: white;
-        text-align: right;
-        margin-left: auto;
-      }
-
-      .bot-message {
-        background: #f1f1f1;
-        color: black;
-      }
-
-      /* Chat Input */
-      .chat-input {
-        display: flex;
-        /* height: 50px; */
-        padding: 10px;
-        border-top: 1px solid #d3c7c7;
-        background-color: #e6e6fa;
-      }
-
-      .chat-input input {
-        flex-grow: 1;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        outline: none;
-        background-color: #e6e6fa;
-      }
-
-      .chat-input button {
-        /* background: #007bff; */
-        color: white;
-        padding: 8px 15px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-left: 5px;
-        background-color: #e6e6fa;
-        /* box-shadow: 2px 2px 2px red; */
-        /* border-radius: 50px; */
-        /* background: #e0e0e0; */
-        box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
-      }
-
-      /* .chat-input button:hover { */
-      /* background: #0056b3; */
-      /* } */
-
-      /* Quotation Form */
-      .form-message {
-        background: #f8f9fa;
-        padding: 10px;
-        border-radius: 5px;
-        margin: 5px 0;
-        max-width: 95%; /* ✅ Prevents overflowing */
-        width: auto; /* ✅ Adjusts width dynamically */
-        box-sizing: border-box; /* ✅ Ensures padding is included in width */
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* ✅ Centers content */
-      }
-
-      .form-message input,
-      .form-message select,
-      .form-message button {
-        width: 90%; /* ✅ Prevents input fields from overflowing */
-        max-width: 300px; /* ✅ Keeps inputs within form */
-        padding: 8px;
-        margin: 5px 0;
-        border-radius: 5px;
-        border: 1px solid #ddd;
-        box-sizing: border-box; /* ✅ Ensures width includes padding */
-      }
-
-      /* ✅ Fix close button position */
-      .form-message .close_form {
+      .menu-box {
         position: absolute;
-        top: 5px;
-        right: 5px;
-        width: 35px;
-        height: 35px;
-        font-size: 16px;
-        padding: 5px;
-        border-radius: 50%;
-        background: red;
-        color: white;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .form-message .close_form:hover {
-        background: darkred;
-      }
-      .loader {
-        width: 40px;
-        aspect-ratio: 2;
-        --_g: no-repeat radial-gradient(circle closest-side, #000 90%, #0000);
-        background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;
-        background-size: calc(100% / 3) 50%;
-        animation: l3 1s infinite linear;
-      }
-      @keyframes l3 {
-        20% {
-          background-position: 0% 0%, 50% 50%, 100% 50%;
-        }
-        40% {
-          background-position: 0% 100%, 50% 0%, 100% 50%;
-        }
-        60% {
-          background-position: 0% 50%, 50% 100%, 100% 0%;
-        }
-        80% {
-          background-position: 0% 50%, 50% 50%, 100% 100%;
-        }
-      }
-
-      .carousel-container {
-        /* border: 2PX SOLID blue  ; */
-        /* padding: 10px; */
-        position: relative;
-        width: 100%;
-        padding-top: 10px;
-        overflow: hidden;
-        border-radius: 5px;
-        /* box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); */
-        /* background: #fff; */
-        padding-bottom: 10px;
-      }
-
-      .carousel {
-        padding: "20px";
-        display: flex;
-        transition: transform 0.5s ease-in-out;
-        width: 100%;
-      }
-
-      .carousel-item {
-        min-width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        /* background: #f1f1f1; */
-      }
-
-      .carousel-item img {
-        width: 90%;
-        height: 150px;
-        object-fit: cover; /* Ensures image fills the box properly */
-        border-radius: 10px;
-      }
-
-      .maincontainer {
-        display: flex;
-        flex-direction: column;
-      }
-      /* Navigation Buttons */
-      .carousel-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(0, 0, 0, 0.5);
-        color: white;
-        border: none;
-        /* padding: 10px 15px; */
-        cursor: pointer;
-        border-radius: 50%;
-        font-size: 18px;
-        transition: background 0.3s ease-in-out;
-      }
-
-      .carousel-btn:hover {
-        background: rgba(0, 0, 0, 0.8);
-      }
-
-      .prev {
-        left: 10px;
-      }
-
-      .next {
-        right: 10px;
-      }
-      .quries {
-        margin-top: 10px;
-        /* display: flex; */
-      }
-      /* Responsive for smaller screens */
-      @media (max-width: 480px) {
-        .carousel-container {
-          max-width: 320px;
-        }
-        .carousel-item {
-          height: 150px;
-        }
-        .carousel-btn {
-          font-size: 16px;
-          padding: 8px 12px;
-        }
-      }
-
-      .quation {
-        display: flex;
-        justify-content: space-around;
-        align-items: start;
-        flex-wrap: wrap;
-        gap: 10px;
-        background: transparent;
-        padding: 20px;
-        /* display: grid;
-      grid-template-columns: 7fr 5fr;
-      gap: 10px;
-      padding: 20px;
-      border: 2px solid red; */
-      }
-
-      .custom-btn {
-        padding: 10px 15px;
-        font-size: 14px;
-        font-weight: 600;
-        border: none;
-        cursor: pointer;
-        border-radius: 20px;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        white-space: nowrap;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      }
-
-      .btn-1 {
-        background: #007bff;
-        color: white;
-        position: relative;
-        width: 120px;
-        height: 55px;
-        border-radius: 45px;
-        border: none;
-        background-color: rgb(151, 95, 255);
-        color: white;
-        box-shadow: 0px 10px 10px rgb(210, 187, 253) inset,
-          0px 5px 10px rgba(5, 5, 5, 0.212),
-          0px -10px 10px rgb(124, 54, 255) inset;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .Btn::before {
-        width: 70%;
-        height: 2px;
-        position: absolute;
-        background-color: rgba(250, 250, 250, 0.678);
-        content: "";
-        filter: blur(1px);
-        top: 7px;
-        border-radius: 50%;
-      }
-
-      .Btn::after {
-        width: 70%;
-        height: 2px;
-        position: absolute;
-        background-color: rgba(250, 250, 250, 0.137);
-        content: "";
-        filter: blur(1px);
-        bottom: 7px;
-        border-radius: 50%;
-      }
-
-      .Btn:hover {
-        animation: jello-horizontal 0.9s both;
-      }
-
-      @keyframes jello-horizontal {
-        0% {
-          transform: scale3d(1, 1, 1);
-        }
-
-        30% {
-          transform: scale3d(1.25, 0.75, 1);
-        }
-
-        40% {
-          transform: scale3d(0.75, 1.25, 1);
-        }
-
-        50% {
-          transform: scale3d(1.15, 0.85, 1);
-        }
-
-        65% {
-          transform: scale3d(0.95, 1.05, 1);
-        }
-
-        75% {
-          transform: scale3d(1.05, 0.95, 1);
-        }
-
-        100% {
-          transform: scale3d(1, 1, 1);
-        }
-      }
-
-      .btn-1:hover {
-        background: #0056b3;
-      }
-
-      .btn-icon {
-        width: 18px;
-        height: 18px;
-      }
-      /* From Uiverse.io by zjssun */
-      .buttonanimated {
-        line-height: 1;
-        text-decoration: none;
-        display: inline-flex;
-        border: none;
-        width: 140px;
-        cursor: pointer;
-        align-items: center;
-        gap: 0.75rem;
-        background-color: var(--clr);
-        color: #fff;
-        border-radius: 10rem;
-        font-weight: 600;
-        padding: 0.5rem 1.5rem;
-        padding-left: 20px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        transition: background-color 0.3s;
-      }
-
-      .button__icon-wrapper {
-        flex-shrink: 0;
-        width: 25px;
-        height: 25px;
-        position: relative;
-        color: var(--clr);
-        background-color: #fff;
-        border-radius: 50%;
-        display: grid;
-        place-items: center;
-        overflow: hidden;
-      }
-
-      .buttonanimated:hover {
-        background-color: #000;
-      }
-
-      .buttonanimated:hover .button__icon-wrapper {
-        color: #000;
-      }
-
-      .button__icon-svg--copy {
-        position: absolute;
-        transform: translate(-150%, 150%);
-      }
-
-      .buttonanimated:hover .button__icon-svg:first-child {
-        transition: transform 0.3s ease-in-out;
-        transform: translate(150%, -150%);
-      }
-
-      .buttonanimated:hover .button__icon-svg--copy {
-        transition: transform 0.3s ease-in-out 0.1s;
-        transform: translate(0);
-      }
-
-      #quotation-form {
-        position: relative;
-      }
-
-      @media (max-height: 800px) {
-        .chatbot-container {
-          position: fixed;
-          bottom: 10px;
-          right: 20px;
-          /* width: 0px; */
-          height: 96vh;
-          background: linear-gradient(to bottom, #f0f8ff, #e6e6fa);
-          border-radius: 10px;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-          overflow: hidden;
-          display: none;
-          flex-direction: column;
-          /* border: 2px solid red; */
-          position: fixed;
-          bottom: 10px;
-          right: 20px;
-          width: 350px;
-          border-radius: 10px;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-          overflow: hidden;
-          display: none; /* Initially hidden */
-          flex-direction: column;
-
-          /* Add transition for smooth effect */
-          opacity: 0;
-          transform: scale(0.8);
-          transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-        }
-      }
-
-      /* ✅ Mobile-Friendly Adjustments */
-      @media (max-width: 480px) {
-        /* Chatbot container size adjustment */
-        .chatbot-container {
-          width: 90%; /* Make chatbot container take most of the screen */
-          right: 5%; /* Center the chatbot */
-          bottom: 10px; /* Adjust position */
-          border-radius: 8px;
-          height: 80vh; /* ✅ Set height to 90% of the viewport height */
-          /* border: 2px solid red; */
-          /* ✅ Correct border syntax */
-        }
-
-        .button__icon-wrapper {
-          flex-shrink: 0;
-          width: 15px;
-          height: 15px;
-          position: relative;
-          color: var(--clr);
-          background-color: #fff;
-          border-radius: 50%;
-          display: grid;
-          place-items: center;
-          overflow: hidden;
-        }
-
-        .buttonanimated {
-          line-height: 1;
-          text-decoration: none;
-          display: inline-flex;
-          border: none;
-          width: 120px;
-          cursor: pointer;
-          align-items: center;
-          /* gap: 0.75rem; */
-          background-color: var(--clr);
-          color: #ffffff;
-          border-radius: 5rem;
-          /* font-weight: 600; */
-          /* padding: 0.50rem 1.5rem;
-    padding-left: 20px; */
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          transition: background-color 0.3s;
-        }
-
-        /* Reduce chat messages height */
-        .chat-messages {
-          height: 250px; /* Smaller height for mobile screens */
-          border-radius: 2px;
-          /* background: #e0e0e0; */
-          box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
-          padding-left: 20px;
-          padding-right: 20px;
-        }
-
-        /* Adjust header size */
-        .chat-header {
-          font-size: 16px;
-          padding: 8px;
-        }
-
-        /* Chat input adjustments */
-        .chat-input {
-          flex-direction: row;
-          padding: 8px;
-        }
-
-        .chat-input input {
-          padding: 6px;
-          font-size: 14px;
-          border-radius: 4px;
-        }
-
-        .chat-input button {
-          padding: 6px 10px;
-          font-size: 14px;
-          border-radius: 4px;
-        }
-
-        /* ✅ Make carousel images fit better on small screens */
-        .carousel-container {
-          max-width: 100%;
-          /* padding-left: "20px"; */
-          /* align-items: center; */
-          /* border: 2px solid red; */
-          height: 140px;
-          overflow: hidden;
-        }
-
-        .carousel-item img {
-          width: 75%;
-          height: 120px; /* Adjust height */
-          border-radius: 8px;
-          /* border: 2px solid red; */
-          margin-top: -30px;
-        }
-
-        /* Reduce carousel button size */
-        .carousel-btn {
-          font-size: 5px;
-          /* padding: 5px 10px; */
-          /* border: 2px solid red; */
-        }
-
-        /* ✅ Adjust button layout for mobile */
-        .quation {
-          /* display: grid;
-      grid-template-columns: 6fr 6fr;
-      justify-content: space-between;
-      margin-left: 12px; */
-          /* gap: 10px; */
-          /* padding: 20px; */
-          /* border: 2px solid red; */
-          /* margin-top: -70px;
-      align-content: center; */
-          margin-top: -20px;
-          display: flex;
-          justify-content: space-around;
-          align-items: start;
-          flex-wrap: wrap;
-
-          /* gap: 10px; */
-          background: transparent;
-          padding-left: 35px;
-          padding-right: 35px;
-          padding-top: 0px;
-          padding-bottom: -10px;
-        }
-
-        /* Make buttons smaller for mobile */
-        .custom-btn {
-          font-size: 5px;
-          padding: 8px;
-        }
-
-        .btn-1 {
-          width: 100px;
-          height: 45px;
-          font-size: 12px;
-          border: 2px solid red;
-        }
-
-        /* Adjust chatbot icon size */
-        .chatbot-icon {
-          width: 50px;
-          height: 50px;
-          font-size: 20px;
-        }
-
-        /* Ensure chatbot input fields fit well */
-        .form-message {
-          width: 95%; /* ✅ Adjust form width */
-          max-width: 400px;
-          /* border: 2px solid red; */
-          margin-left: 10px;
-        }
-
-        .form-message input,
-        .form-message select,
-        .form-message button {
-          width: 85%; /* ✅ Adjust input widths */
-        }
-        .close_form {
-          margin-top: 500px;
-          border: 2px solid red;
-        }
-
-        .contactheader {
-          margin: 5px;
-        }
-      }
-
-      /* Toast Notification Styles */
-      .toast {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 12px 20px;
-        border-radius: 5px;
-        font-size: 14px;
-        font-weight: bold;
-        z-index: 1000;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-      }
-
-      /* Show Toast */
-      .toast.show {
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .formsubmitbutton {
+        top: 35px;
+        left: 0;
         background-color: white;
-        color: black;
-        cursor: pointer;
-      }
-      .formsubmitbutton:hover {
-        background-color: rgb(0, 4, 255);
-        color: white;
-      }
-    </style>
-
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
-      }
-
-      /* Chatbot Icons */
-      .chatbot-icon {
-        position: fixed;
-        bottom: 120px;
-        right: 20px;
-        /* background: #007bff; */
-        color: white;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 24px;
-        cursor: pointer;
-        /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); */
-        box-shadow: 28px 28px 56px #927f7f, -28px -28px 56px #c6abab;
-      }
-
-      /* Chatbot Container (Hidden by default) */
-      .chatbot-container {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        width: 350px;
-        background: linear-gradient(to bottom, #f0f8ff, #e6e6fa);
-        z-index: 5000;
-
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        display: none;
-        flex-direction: column;
-
-        position: fixed;
-        /* bottom: 10px; */
-        right: 20px;
-        width: 350px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-        display: none; /* Initially hidden */
-        flex-direction: column;
-
-        /* Add transition for smooth effect */
-        opacity: 0;
-        transform: scale(0.8);
-        transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-      }
-
-      /* Chat Header */
-      .chat-header {
-        background: #007bff;
-        color: white;
+        border-radius: 8px;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2);
         padding: 10px;
-        text-align: center;
-        font-size: 18px;
-        font-weight: bold;
+        z-index: 999;
+        display: none;
+        width: 160px;
+      }
+
+      .menu-item {
+        padding: 8px 10px;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: black;
+      }
+
+      .menu-item:hover {
+        background-color: #f1f1f1;
+      }
+
+      .info-item {
+        padding: 8px 10px;
+        font-size: 14px;
+        cursor: pointer;
         display: flex;
         justify-content: space-between;
         align-items: center;
       }
 
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.4); /* semi-transparent background */
+        display: none; /* default hidden */
+        align-items: center;
+        justify-content: center;
+        z-index: 9999; /* make sure it's above other elements */
+      }
+
+      .modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        max-width: 500px;
+        width: 100%;
+        text-align: center;
+      }
+
+      /* Close button */
       .close-btn {
         cursor: pointer;
-        font-size: 20px;
-        padding: 0 3px;
-      }
-
-      /* Chat Messages */
-      .chat-messages {
-        /* border: 2px solid red; */
-        height: 300px;
-        overflow-y: auto;
+        background-color: red;
+        color: white;
         padding: 10px;
-        /* background: #; */
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start; /* Ensure messages stack properly */
-        scroll-behavior: smooth; /* Smooth scrolling */
-      }
-      .chat-messages::-webkit-scrollbar {
-        display: none;
-      }
-
-      .message {
-        padding: 8px;
-        border-radius: 5px;
-        margin: 5px 0;
-        max-width: 80%;
-      }
-
-      .user-message {
-        background: #007bff;
-        color: white;
-        text-align: right;
-        margin-left: auto;
-      }
-
-      .bot-message {
-        background: #f1f1f1;
-        color: black;
-      }
-
-      /* Chat Input */
-      .chat-input {
-        display: flex;
-        /* height: 50px; */
-        padding: 10px;
-        border-top: 1px solid #d3c7c7;
-        background-color: #e6e6fa;
-      }
-
-      .chat-input input {
-        flex-grow: 1;
-        padding: 8px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        outline: none;
-        background-color: #e6e6fa;
-      }
-
-      .chat-input button {
-        /* background: #007bff; */
-        color: white;
-        padding: 8px 15px;
         border: none;
         border-radius: 5px;
-        cursor: pointer;
-        margin-left: 5px;
-        background-color: #e6e6fa;
-        /* box-shadow: 2px 2px 2px red; */
-        /* border-radius: 50px; */
-        /* background: #e0e0e0; */
-        box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
       }
 
-      /* .chat-input button:hover { */
-      /* background: #0056b3; */
-      /* } */
-
-      /* Quotation Form */
-      .form-message {
-        background: #f8f9fa;
-        padding: 10px;
-        border-radius: 5px;
-        margin: 5px 0;
-        max-width: 95%; /* ✅ Prevents overflowing */
-        width: auto; /* ✅ Adjusts width dynamically */
-        box-sizing: border-box; /* ✅ Ensures padding is included in width */
-        display: flex;
-        flex-direction: column;
-        align-items: center; /* ✅ Centers content */
-      }
-
-      .form-message input,
-      .form-message select,
-      .form-message button {
-        width: 90%; /* ✅ Prevents input fields from overflowing */
-        max-width: 300px; /* ✅ Keeps inputs within form */
-        padding: 8px;
-        margin: 5px 0;
-        border-radius: 5px;
-        border: 1px solid #ddd;
-        box-sizing: border-box; /* ✅ Ensures width includes padding */
-      }
-
-      /* ✅ Fix close button position */
-      .form-message .close_form {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-        width: 35px;
-        height: 35px;
-        font-size: 16px;
-        padding: 5px;
-        border-radius: 50%;
-        background: red;
-        color: white;
-        border: none;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .form-message .close_form:hover {
-        background: darkred;
-      }
-      .loader {
-        width: 40px;
-        aspect-ratio: 2;
-        --_g: no-repeat radial-gradient(circle closest-side, #000 90%, #0000);
-        background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;
-        background-size: calc(100% / 3) 50%;
-        animation: l3 1s infinite linear;
-      }
-      @keyframes l3 {
-        20% {
-          background-position: 0% 0%, 50% 50%, 100% 50%;
-        }
-        40% {
-          background-position: 0% 100%, 50% 0%, 100% 50%;
-        }
-        60% {
-          background-position: 0% 50%, 50% 100%, 100% 0%;
-        }
-        80% {
-          background-position: 0% 50%, 50% 50%, 100% 100%;
-        }
-      }
-
-      .carousel-container {
-        /* border: 2PX SOLID blue  ; */
-        /* padding: 10px; */
-        position: relative;
-        width: 100%;
-        padding-top: 10px;
-        overflow: hidden;
-        border-radius: 5px;
-        /* box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); */
-        /* background: #fff; */
-        padding-bottom: 10px;
-      }
-
-      .carousel {
-        padding: "20px";
-        display: flex;
-        transition: transform 0.5s ease-in-out;
-        width: 100%;
-      }
-
-      .carousel-item {
-        min-width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        /* background: #f1f1f1; */
-      }
-
-      .carousel-item img {
-        width: 90%;
-        height: 150px;
-        object-fit: cover; /* Ensures image fills the box properly */
-        border-radius: 10px;
-      }
-
-      .maincontainer {
-        display: flex;
-        flex-direction: column;
-      }
-      /* Navigation Buttons */
-      .carousel-btn {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background: rgba(0, 0, 0, 0.5);
-        color: white;
-        border: none;
-        /* padding: 10px 15px; */
-        cursor: pointer;
-        border-radius: 50%;
-        font-size: 18px;
-        transition: background 0.3s ease-in-out;
-      }
-
-      .carousel-btn:hover {
-        background: rgba(0, 0, 0, 0.8);
-      }
-
-      .prev {
-        left: 10px;
-      }
-
-      .next {
-        right: 10px;
-      }
-      .quries {
-        margin-top: 10px;
-        /* display: flex; */
-      }
-      /* Responsive for smaller screens */
-      @media (max-width: 480px) {
-        .carousel-container {
-          max-width: 320px;
-        }
-        .carousel-item {
-          height: 150px;
-        }
-        .carousel-btn {
-          font-size: 16px;
-          padding: 8px 12px;
-        }
-      }
-
-      .quation {
-        display: flex;
-        justify-content: space-around;
-        align-items: start;
-        flex-wrap: wrap;
-        gap: 10px;
-        background: transparent;
-        padding: 20px;
-        /* display: grid;
-grid-template-columns: 7fr 5fr;
-gap: 10px;
-padding: 20px;
-border: 2px solid red; */
-      }
-
-      .custom-btn {
-        padding: 10px 15px;
-        font-size: 14px;
-        font-weight: 600;
-        border: none;
-        cursor: pointer;
-        border-radius: 20px;
-        transition: all 0.3s ease;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        white-space: nowrap;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-      }
-
-      .btn-1 {
-        background: #007bff;
-        color: white;
-        position: relative;
-        width: 120px;
-        height: 55px;
-        border-radius: 45px;
-        border: none;
-        background-color: rgb(151, 95, 255);
-        color: white;
-        box-shadow: 0px 10px 10px rgb(210, 187, 253) inset,
-          0px 5px 10px rgba(5, 5, 5, 0.212),
-          0px -10px 10px rgb(124, 54, 255) inset;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .Btn::before {
-        width: 70%;
-        height: 2px;
-        position: absolute;
-        background-color: rgba(250, 250, 250, 0.678);
-        content: "";
-        filter: blur(1px);
-        top: 7px;
-        border-radius: 50%;
-      }
-
-      .Btn::after {
-        width: 70%;
-        height: 2px;
-        position: absolute;
-        background-color: rgba(250, 250, 250, 0.137);
-        content: "";
-        filter: blur(1px);
-        bottom: 7px;
-        border-radius: 50%;
-      }
-
-      .Btn:hover {
-        animation: jello-horizontal 0.9s both;
-      }
-
-      @keyframes jello-horizontal {
-        0% {
-          transform: scale3d(1, 1, 1);
-        }
-
-        30% {
-          transform: scale3d(1.25, 0.75, 1);
-        }
-
-        40% {
-          transform: scale3d(0.75, 1.25, 1);
-        }
-
-        50% {
-          transform: scale3d(1.15, 0.85, 1);
-        }
-
-        65% {
-          transform: scale3d(0.95, 1.05, 1);
-        }
-
-        75% {
-          transform: scale3d(1.05, 0.95, 1);
-        }
-
-        100% {
-          transform: scale3d(1, 1, 1);
-        }
-      }
-
-      .btn-1:hover {
-        background: #0056b3;
-      }
-
-      .btn-icon {
-        width: 18px;
-        height: 18px;
-      }
-      /* From Uiverse.io by zjssun */
-      .buttonanimated {
-        line-height: 1;
-        text-decoration: none;
-        display: inline-flex;
-        border: none;
-        width: 140px;
-        cursor: pointer;
-        align-items: center;
-        gap: 0.75rem;
-        background-color: var(--clr);
-        color: #fff;
-        border-radius: 10rem;
-        font-weight: 600;
-        padding: 0.5rem 1.5rem;
-        padding-left: 20px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        transition: background-color 0.3s;
-      }
-
-      .button__icon-wrapper {
-        flex-shrink: 0;
-        width: 25px;
-        height: 25px;
-        position: relative;
-        color: var(--clr);
-        background-color: #fff;
-        border-radius: 50%;
-        display: grid;
-        place-items: center;
-        overflow: hidden;
-      }
-
-      .buttonanimated:hover {
-        background-color: #000;
-      }
-
-      .buttonanimated:hover .button__icon-wrapper {
-        color: #000;
-      }
-
-      .button__icon-svg--copy {
-        position: absolute;
-        transform: translate(-150%, 150%);
-      }
-
-      .buttonanimated:hover .button__icon-svg:first-child {
-        transition: transform 0.3s ease-in-out;
-        transform: translate(150%, -150%);
-      }
-
-      .buttonanimated:hover .button__icon-svg--copy {
-        transition: transform 0.3s ease-in-out 0.1s;
-        transform: translate(0);
-      }
-
-      #quotation-form {
-        position: relative;
-      }
-
-      /* ✅ Mobile-Friendly Adjustments */
-      @media (max-width: 480px) {
-        /* Chatbot container size adjustment */
-        .chatbot-container {
-          width: 90%; /* Make chatbot container take most of the screen */
-          right: 5%; /* Center the chatbot */
-          bottom: 10px; /* Adjust position */
-          border-radius: 8px;
-          height: 80vh; /* ✅ Set height to 90% of the viewport height */
-          /* border: 2px solid red; */
-          /* ✅ Correct border syntax */
-        }
-
-        .button__icon-wrapper {
-          flex-shrink: 0;
-          width: 15px;
-          height: 15px;
-          position: relative;
-          color: var(--clr);
-          background-color: #fff;
-          border-radius: 50%;
-          display: grid;
-          place-items: center;
-          overflow: hidden;
-        }
-
-        .buttonanimated {
-          line-height: 1;
-          text-decoration: none;
-          display: inline-flex;
-          border: none;
-          width: 120px;
-          cursor: pointer;
-          align-items: center;
-          /* gap: 0.75rem; */
-          background-color: var(--clr);
-          color: #ffffff;
-          border-radius: 5rem;
-          /* font-weight: 600; */
-          /* padding: 0.50rem 1.5rem;
-padding-left: 20px; */
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          transition: background-color 0.3s;
-        }
-
-        /* Reduce chat messages height */
-        .chat-messages {
-          height: 250px; /* Smaller height for mobile screens */
-          border-radius: 2px;
-          /* background: #e0e0e0; */
-          box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
-          padding-left: 20px;
-          padding-right: 20px;
-        }
-
-        /* Adjust header size */
-        .chat-header {
-          font-size: 16px;
-          padding: 8px;
-        }
-
-        /* Chat input adjustments */
-        .chat-input {
-          flex-direction: row;
-          padding: 8px;
-        }
-
-        .chat-input input {
-          padding: 6px;
-          font-size: 14px;
-          border-radius: 4px;
-        }
-
-        .chat-input button {
-          padding: 6px 10px;
-          font-size: 14px;
-          border-radius: 4px;
-        }
-
-        /* ✅ Make carousel images fit better on small screens */
-        .carousel-container {
-          max-width: 100%;
-          /* padding-left: "20px"; */
-          /* align-items: center; */
-          /* border: 2px solid red; */
-          height: 140px;
-          overflow: hidden;
-        }
-
-        .carousel-item img {
-          width: 75%;
-          height: 110px; /* Adjust height */
-          border-radius: 8px;
-          /* border: 2px solid red; */
-          margin-top: -50px;
-        }
-
-        /* Reduce carousel button size */
-        .carousel-btn {
-          font-size: 5px;
-          /* padding: 5px 10px; */
-          /* border: 2px solid red; */
-        }
-
-        /* ✅ Adjust button layout for mobile */
-        .quation {
-          /* display: grid;
-grid-template-columns: 6fr 6fr;
-justify-content: space-between;
-margin-left: 12px; */
-          /* gap: 10px; */
-          /* padding: 20px; */
-          /* border: 2px solid red; */
-          /* margin-top: -70px;
-align-content: center; */
-          margin-top: -20px;
-          display: flex;
-          justify-content: space-around;
-          align-items: start;
-          flex-wrap: wrap;
-
-          /* gap: 10px; */
-          background: transparent;
-          padding-left: 35px;
-          padding-right: 35px;
-          padding-top: 0px;
-          padding-bottom: -10px;
-        }
-
-        /* Make buttons smaller for mobile */
-        .custom-btn {
-          font-size: 5px;
-          padding: 8px;
-        }
-
-        .btn-1 {
-          width: 100px;
-          height: 45px;
-          font-size: 12px;
-          border: 2px solid red;
-        }
-
-        /* Adjust chatbot icon size */
-        .chatbot-icon {
-          width: 50px;
-          height: 50px;
-          font-size: 20px;
-        }
-
-        /* Ensure chatbot input fields fit well */
-        .form-message {
-          width: 95%; /* ✅ Adjust form width */
-          max-width: 400px;
-          /* border: 2px solid red; */
-          margin-left: 10px;
-        }
-
-        .form-message input,
-        .form-message select,
-        .form-message button {
-          width: 85%; /* ✅ Adjust input widths */
-        }
-        .close_form {
-          margin-top: 500px;
-          border: 2px solid red;
-        }
-
-        .contactheader {
-          margin: 5px;
-        }
-      }
-
-      /* Toast Notification Styles */
-      .toast {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 12px 20px;
-        border-radius: 5px;
-        font-size: 14px;
-        font-weight: bold;
-        z-index: 1000;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
-      }
-
-      /* Show Toast */
-      .toast.show {
-        opacity: 1;
-        visibility: visible;
-      }
-    </style> -->
-
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
+      .close-btn:hover {
+        background-color: darkred;
       }
 
       /* Chatbot Icons */
@@ -1474,18 +169,16 @@ align-content: center; */
         position: fixed;
         bottom: 20px;
         right: 20px;
-        /* background: #007bff; */
-        color: white;
-        width: 60px;
-        height: 60px;
+        /* color: white; */
+        width: 70px;
+        height: 70px;
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 24px;
+        /* font-size: 24px; */
         cursor: pointer;
-        /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); */
-        box-shadow: 28px 28px 56px #927f7f, -28px -28px 56px #c6abab;
+        /* box-shadow: 28px 28px 56px #927f7f, -28px -28px 56px #c6abab; */
       }
 
       /* Chatbot Container (Hidden by default) */
@@ -1531,7 +224,7 @@ align-content: center; */
         align-items: center;
       }
 
-      .close-btn {
+      .close-btn1 {
         cursor: pointer;
         font-size: 20px;
         padding: 0 3px;
@@ -1948,7 +641,7 @@ align-content: center; */
           bottom: 10px;
           right: 20px;
           /* width: 0px; */
-          height: 99%;
+          height: 95%;
           padding-top: 0px;
           background: linear-gradient(to bottom, #f0f8ff, #e6e6fa);
           border-radius: 10px;
@@ -1979,7 +672,7 @@ align-content: center; */
           max-width: 100%;
           align-items: center;
           /* border: 2px solid red; */
-          height: 300px;
+          height: 200px;
         }
         .carousel-item {
           height: 170px;
@@ -2014,7 +707,7 @@ align-content: center; */
           /* margin-top: -70px;
     align-content: center; */
           /* margin-top: -20px; */
-          margin-top: -40px;
+          margin-top: -20px;
           display: flex;
           justify-content: space-around;
           align-items: start;
@@ -2037,7 +730,7 @@ align-content: center; */
           width: 100%; /* Make chatbot container take most of the screen */
           right: 0px;
           padding: 0px;
-          bottom: 0px;
+          /* bottom: 10px;  */
           border-radius: 8px;
           height: 100%; /* ✅ Set height to 90% of the viewport height */
           /* border: 2px solid red; */
@@ -2187,11 +880,11 @@ align-content: center; */
         }
 
         /* Adjust chatbot icon size */
-        .chatbot-icon {
-          width: 50px;
-          height: 50px;
-          font-size: 20px;
-        }
+        /* .chatbot-icon {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+          } */
 
         /* Ensure chatbot input fields fit well */
         .form-message {
@@ -2249,28 +942,70 @@ align-content: center; */
         background-color: rgb(0, 4, 255);
         color: white;
       }
+
+      .buttonbody {
+        cursor: pointer;
+        border-radius: 5px;
+        /* border: 1px solid gray; */
+        border: 1px solid transparent;
+        padding: 7px;
+        background-color: rgb(186, 119, 199);
+        color: white;
+      }
+
+      .buttonbody:hover {
+        border: 1px solid rgb(186, 119, 199);
+        color: rgb(186, 119, 199);
+        background-color: white;
+      }
+      .buttondwn {
+        text-decoration: none;
+        color: inherit;
+      }
     </style>
   </head>
 
   <body class="v-dark dsn-effect-scroll dsn-cursor-effect dsn-ajax">
+    <!-- Chatbot Icon -->
     <div class="chatbot-icon" id="chatbot-icon" onclick="toggleChatbot()">
-      <img
-        src="https://cdn-icons-png.freepik.com/256/11765/11765239.png?uid=P7856354&ga=GA1.1.300942411.1741840633&semt=ais_hybrid"
-        style="width: 45px; height: 45px"
-      />
+      <!-- <img
+          src="https://cdn-icons-png.freepik.com/256/11765/11765239.png?uid=P7856354&ga=GA1.1.300942411.1741840633&semt=ais_hybrid"
+          style="width: 45px; height: 45px"
+        /> -->
+      <dotlottie-player
+        src="https://lottie.host/e6dba01a-b761-451b-83ec-b50472493ed0/U3vnqO1pH5.lottie"
+        background="transparent"
+        speed="1"
+        style="width: 400px; height: 400px"
+        loop
+        autoplay
+      ></dotlottie-player>
     </div>
 
     <div id="toast" class="toast"></div>
 
     <div class="chatbot-container" id="chatbot">
       <div class="chat-header">
+        <div style="position: relative">
+          <div class="menu-trigger" onclick="toggleMenuBox()">
+            <i
+              class="bi bi-three-dots-vertical"
+              style="font-size: 30px; cursor: pointer"
+            ></i>
+          </div>
+
+          <div id="menuBox" class="menu-box text-black">
+            <div class="menu-item" onclick="downloadChat()">Download Chat</div>
+            <div class="menu-item" onclick="clearChat()">Clear Chat</div>
+          </div>
+        </div>
         <img
           src="https://brihaspathi.com/assets-bt/img/logo.png"
           alt=""
           height="50px"
           width="150px"
         />
-        <span class="close-btn" onclick="toggleChatbot()">
+        <span class="close-btn1" onclick="toggleChatbot()">
           <img
             src="https://cdn-icons-png.freepik.com/256/11607/11607141.png?uid=P7856354&ga=GA1.1.300942411.1741840633&semt=ais_hybrid"
             style="width: 40px; height: 40px"
@@ -2281,11 +1016,6 @@ align-content: center; */
       <!-- Move carousel container OUTSIDE chat-messages -->
       <div class="carousel-container">
         <div class="carousel">
-          <div class="carousel-item">
-            <img
-              src="https://brihaspathi.com/btlvisitor/btlvisitor/chatbot-1_20250312T065008548Z.jpeg"
-            />
-          </div>
           <div class="carousel-item">
             <img
               src="https://brihaspathi.com/btlvisitor/btlvisitor/chatbot-2_20250312T065056122Z.jpeg"
@@ -2320,152 +1050,41 @@ align-content: center; */
       </div>
 
       <div class="quries">
-        <div class="quation">
-          <!-- Products Button -->
-          <!-- From Uiverse.io by Creatlydev -->
-          <button
-            href="#"
-            class="buttonanimated"
-            style="--clr: #7808d0"
-            onclick="handleButtonClick('About us')"
-          >
-            <span class="button__icon-wrapper">
-              <svg
-                viewBox="0 0 14 15"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                class="button__icon-svg"
-                width="10"
-              >
-                <path
-                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                  fill="currentColor"
-                ></path>
-              </svg>
-
-              <svg
-                viewBox="0 0 14 15"
-                fill="none"
-                width="10"
-                xmlns="http://www.w3.org/2000/svg"
-                class="button__icon-svg button__icon-svg--copy"
-              >
-                <path
-                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                  fill="currentColor"
-                ></path>
-              </svg>
-            </span>
+        <div
+          class="quation"
+          style="
+            display: grid;
+            grid-template-columns: 4fr 4fr 4fr;
+            gap: 10px;
+            padding-left: 10px;
+            padding-right: 10px;
+          "
+        >
+          <button class="buttonbody" onclick="handleButtonClick('About us')">
             About us
           </button>
-
-          <!-- Projects Button -->
-          <button
-            href="#"
-            class="buttonanimated"
-            style="--clr: #7808d0"
-            onclick="handleButtonClick('Products')"
-          >
-            <span class="button__icon-wrapper">
-              <svg
-                viewBox="0 0 14 15"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                class="button__icon-svg"
-                width="10"
-              >
-                <path
-                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                  fill="currentColor"
-                ></path>
-              </svg>
-
-              <svg
-                viewBox="0 0 14 15"
-                fill="none"
-                width="10"
-                xmlns="http://www.w3.org/2000/svg"
-                class="button__icon-svg button__icon-svg--copy"
-              >
-                <path
-                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                  fill="currentColor"
-                ></path>
-              </svg>
-            </span>
+          <button class="buttonbody" onclick="handleButtonClick('Products')">
             Products
           </button>
-
-          <!-- Contact Us Button (Opens Quotation Form) -->
-          <button
-            href="#"
-            class="buttonanimated"
-            style="--clr: #7808d0"
-            onclick="handleButtonClick('Careers')"
-          >
-            <span class="button__icon-wrapper">
-              <svg
-                viewBox="0 0 14 15"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                class="button__icon-svg"
-                width="10"
-              >
-                <path
-                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                  fill="currentColor"
-                ></path>
-              </svg>
-
-              <svg
-                viewBox="0 0 14 15"
-                fill="none"
-                width="10"
-                xmlns="http://www.w3.org/2000/svg"
-                class="button__icon-svg button__icon-svg--copy"
-              >
-                <path
-                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                  fill="currentColor"
-                ></path>
-              </svg>
-            </span>
+          <button class="buttonbody" onclick="handleButtonClick('Careers')">
             Careers
           </button>
-          <button
-            href="#"
-            class="buttonanimated"
-            style="--clr: #7808d0"
-            onclick="showQuotationForm()"
-          >
-            <span class="button__icon-wrapper">
-              <svg
-                viewBox="0 0 14 15"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                class="button__icon-svg"
-                width="10"
-              >
-                <path
-                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                  fill="currentColor"
-                ></path>
-              </svg>
-
-              <svg
-                viewBox="0 0 14 15"
-                fill="none"
-                width="10"
-                xmlns="http://www.w3.org/2000/svg"
-                class="button__icon-svg button__icon-svg--copy"
-              >
-                <path
-                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
-                  fill="currentColor"
-                ></path>
-              </svg>
-            </span>
+          <button class="buttonbody" onclick="showQuotationForm()">
             Contact us
+          </button>
+
+          <button class="buttonbody" onclick="handleButtonClick('Sales')">
+            Sales
+          </button>
+          <button class="buttonbody" title="download brouchure">
+            <a
+              class="buttondwn"
+              style="text-decoration: none; text-decoration-color: none"
+              ,
+              href="http://183.82.0.94:81/download-brochure"
+            >
+              Brouchure&nbsp;</a
+            >
           </button>
         </div>
       </div>
@@ -2473,6 +1092,29 @@ align-content: center; */
       <div class="chat-messages" id="chat-messages"></div>
 
       <div class="chat-input">
+        <div style="position: relative; padding: 10px">
+          <div
+            style="font-size: 20px; cursor: pointer"
+            onclick="toggleInfoBox()"
+          >
+            <i class="bi bi-info-circle"></i>
+          </div>
+          <div id="infoBox" class="info-box">
+            <div class="info-item">
+              <strong>Instructions</strong>
+            </div>
+            <div style="margin-left: 7px; margin-top: 5px">
+              <div style="font-size: 10px">
+                1.The chat will automatically clear after 1 minute of
+                inactivity.
+              </div>
+              <div style="font-size: 10px; margin-top: 5px">
+                2.Chat history will be saved for improvements.
+              </div>
+            </div>
+          </div>
+        </div>
+
         <input
           type="text"
           id="user-input"
@@ -6878,6 +5520,10 @@ align-content: center; */
     <!-- Optional JavaScript -->
 
     <script src="assets-bt/js/jquery-3.1.1.min.js"></script>
+    <script
+      src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+      type="module"
+    ></script>
 
     <script src="assets-bt/js/plugins.min.js"></script>
 
@@ -6885,206 +5531,10 @@ align-content: center; */
 
     <script src="assets-bt/js/custom.js"></script>
 
-    <!-- <script>
-        // Function to Toggle Chatbot
-        function toggleChatbot() {
-            const chatbot = document.getElementById("chatbot");
-            const chatbotIcon = document.getElementById("chatbot-icon");
-
-            if (chatbot.style.display === "none" || chatbot.style.display === "") {
-                chatbot.style.display = "flex"; // Show chatbot
-                chatbotIcon.style.display = "none"; // Hide chatbot icon
-            } else {
-                chatbot.style.display = "none"; // Hide chatbot
-                chatbotIcon.style.display = "flex"; // Show chatbot icon
-            }
-        }
-
-
-
-        function handleKeyPress(event) {
-            if (event.key === "Enter") {
-                sendMessage();
-            }
-        }
-
-        // Function to Send Message
-        async function sendMessage() {
-            const inputField = document.getElementById("user-input");
-            const messageText = inputField.value.trim();
-            if (messageText === "") return;
-
-            const messagesDiv = document.getElementById("chat-messages");
-
-            // Add user message
-            const userMsg = document.createElement("div");
-            userMsg.className = "message user-message";
-            userMsg.innerText = messageText;
-            messagesDiv.appendChild(userMsg);
-
-            inputField.value = "";
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-
-            // Create and append loader
-    const loader = document.createElement("div");
-    loader.className = "loader";
-    // loader.innerText = "Typing...";
-    messagesDiv.appendChild(loader);
-
-    // Ensure loader is visible in the chat window
-    loader.scrollIntoView({ behavior: "smooth" });
-    
-            // Call API to get chatbot response
-            try {
-                const response = await fetch("http://localhost:8000/chat", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ message: messageText })
-                });
-
-                const data = await response.json();
-                loader.remove();
-
-                // Add bot response
-                const botMsg = document.createElement("div");
-                botMsg.className = "message bot-message";
-                botMsg.innerText = data.response || "I'm here to help!";
-                messagesDiv.appendChild(botMsg);
-
-                // Check if form should be shown
-                if (data.show_form) {
-                    showQuotationForm();
-                }
-
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
-            } catch (error) {
-                console.error("Error fetching response:", error);
-                const botMsg = document.createElement("div");
-                botMsg.className = "message bot-message";
-                botMsg.innerText = "⚠️ Error fetching response. Please try again later.";
-                messagesDiv.appendChild(botMsg);
-                loader.remove(); 
-            }
-        }
-
-        // Function to Show Quotation Form
-        function showQuotationForm() {
-            const messagesDiv = document.getElementById("chat-messages");
-
-            // Create a form message container
-            const formContainer = document.createElement("div");
-            formContainer.className = "form-message";
-
-            formContainer.innerHTML = `
-                <h3>Request a Quotation</h3>
-                <input type="text" id="name" placeholder="Your Name" required>
-                <input type="email" id="email" placeholder="Email Address" required>
-                <input type="tel" id="phone" placeholder="Mobile Number" required>
-                <select id="interest" required>
-                    <option value="">Select an Interest</option>
-                    <option value="CCTV/Camera">CCTV/Camera</option>
-                    <option value="Software">Software</option>
-                    <option value="Computer/Laptop">Computer/Laptop</option>
-                    <option value="Solar">Solar</option>
-                    <option value="All">All</option>
-                </select>
-                <button onclick="submitQuotation()">Submit</button>
-            `;
-
-            messagesDiv.appendChild(formContainer);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
-        }
-
-
-
-        async function submitQuotation() {
-    const fullName = document.getElementById("fullName").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const phone = document.getElementById("phone").value.replace(/\D/g, ''); // Remove non-numeric characters
-    const interest = document.getElementById("interest").value.trim();
-
-    // Validate fields before submitting
-    if (!fullName || !email || !phone || !interest) {
-        displayBotMessage("⚠️ Please fill out all required fields.");
-        return;
-    }
-
-    const formData = {
-        ContactName: fullName,
-        Email: email,
-        Phone: phone,
-        Interest: interest,
-        TAGS: document.getElementById("interest").value.trim() + "_Others",
-        LeadSource: "Website",
-        Description: ""
-    };
-
-    const messagesDiv = document.getElementById("chat-messages");
-
-    // Show a loading message
-    const loader = document.createElement("div");
-    loader.className = "loader";
-    messagesDiv.appendChild(loader);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-
-    try {
-        const response = await fetch("https://app.bizgaze.com/apis/v4/bizgaze/integrations/leads/chatbot", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer 27f4d43e52654efe8cd3257c36865ac7"
-            },
-            body: JSON.stringify(formData)
-        });
-
-        loader.remove(); // Remove loader
-
-        if (!response.ok) {
-            throw new Error("Failed to submit lead. Please try again later.");
-        }
-
-        const result = await response.json();
-
-        // Check API response status
-        if (result.status === 2) {
-            displayBotMessage(`⚠️ ${result.message}`);
-            return;
-        }
-
-        // ✅ Success: Remove form & show confirmation
-        document.querySelector(".form-message").remove();
-        displayBotMessage("✅ Your request has been submitted! We will get back to you soon.");
-
-    } catch (error) {
-        console.error("Error submitting form:", error);
-        loader.remove(); // Ensure loader is removed in case of errors
-        displayBotMessage("⚠️ Error submitting request. Please try again later.");
-    }
-}
-
-// Function to append chatbot messages (User/Bot)
-function displayBotMessage(text) {
-    const messagesDiv = document.getElementById("chat-messages");
-    const botMsg = document.createElement("div");
-    botMsg.className = "message bot-message";
-    botMsg.innerText = text;
-    messagesDiv.appendChild(botMsg);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-}
-        // Close chatbot when clicking outside of it
-document.addEventListener("click", function (event) {
-    const chatbot = document.getElementById("chatbot");
-    const chatbotIcon = document.getElementById("chatbot-icon");
-
-    // If chatbot is open and the click is outside, close it
-    if (chatbot.style.display === "flex" && !chatbot.contains(event.target) && !chatbotIcon.contains(event.target)) {
-        chatbot.style.display = "none";
-        chatbotIcon.style.display = "flex"; // Show chatbot icon again
-    }
-});
-
-
-    </script> -->
+    <script
+      src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
+      type="module"
+    ></script>
 
     <script>
       let index = 0;
@@ -7254,16 +5704,16 @@ document.addEventListener("click", function (event) {
         formContainer.id = "quotation-form";
 
         formContainer.innerHTML = `
-                <button class="close_form" onclick="closeQuotationForm(event)" >✖</button>
-                <h3 class="contactheader" >Contact us</h3>
-                <input type="text" id="fullName" placeholder="Your Name" required>
-                <input type="email" id="email" placeholder="Email Address" required>
-                <input type="tel" id="phone" placeholder="Mobile Number" required>
-                <select id="interest" required>
-                    <option value="">Loading...</option>
-                </select>
-                <button onclick="submitQuotation()">Submit</button>
-            `;
+        <button class="close_form" onclick="closeQuotationForm(event)" >✖</button>
+        <h3 class="contactheader" >Contact us</h3>
+        <input type="text" id="fullName" placeholder="Your Name" required>
+        <input type="email" id="email" placeholder="Email Address" required>
+        <input type="tel" id="phone" placeholder="Mobile Number" required>
+        <select id="interest" required>
+            <option value="">Loading...</option>
+        </select>
+        <button class="formsubmitbutton" onclick="submitQuotation()">Submit</button>
+    `;
 
         messagesDiv.appendChild(formContainer);
         messagesDiv.scrollTop = messagesDiv.scrollHeight;
@@ -7732,6 +6182,88 @@ document.addEventListener("click", function (event) {
 
       // Load chat history when the chatbot is opened or refreshed
       document.addEventListener("DOMContentLoaded", loadChatHistory);
+
+      function toggleMenuBox() {
+        const box = document.getElementById("menuBox");
+        box.style.display = box.style.display === "block" ? "none" : "block";
+      }
+
+      document.addEventListener("click", function (e) {
+        const menuBox = document.getElementById("menuBox");
+        const isClickInsideMenu = e.target.closest("#menuBox");
+        const isClickOnTrigger = e.target.closest(".menu-trigger");
+
+        if (!isClickInsideMenu && !isClickOnTrigger) {
+          menuBox.style.display = "none";
+        }
+      });
+
+      document.addEventListener("DOMContentLoaded", function () {
+        // Expose function globally so inline onclick can access it
+        window.toggleInfoBox = function () {
+          const infoBox = document.getElementById("infoBox");
+          infoBox.style.display =
+            infoBox.style.display === "block" ? "none" : "block";
+        };
+
+        // Optional: Hide info box when clicking outside
+        document.addEventListener("click", function (event) {
+          const infoBox = document.getElementById("infoBox");
+          const isInsideBox = infoBox.contains(event.target);
+          const isInfoIcon = event.target.closest(".bi-info-circle");
+
+          if (!isInsideBox && !isInfoIcon) {
+            infoBox.style.display = "none";
+          }
+        });
+      });
+
+      // Function to open the modal
+      function openModal() {
+        document.getElementById("infoModal").style.display = "flex";
+      }
+
+      // Function to close the modal
+      function closeModal() {
+        document.getElementById("infoModal").style.display = "none";
+      }
+
+      function downloadChat() {
+        const chatHistory =
+          JSON.parse(localStorage.getItem("chatHistory")) || [];
+
+        if (chatHistory.length === 0) {
+          alert("⚠️ No chat history to download.");
+          return;
+        }
+
+        let content = "Chat History:\n\n";
+
+        chatHistory.forEach(({ type, text, timestamp }) => {
+          // Remove all HTML tags (simple regex)
+          const cleanText = text.replace(/<[^>]*>?/gm, "").trim();
+          content += `[${timestamp}] ${type.toUpperCase()}: ${cleanText}\n`;
+        });
+
+        const blob = new Blob([content], { type: "text/plain" });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "chat_history.txt";
+        link.click();
+
+        URL.revokeObjectURL(url);
+      }
+
+      function clearChat() {
+        if (confirm("Are you sure you want to clear the chat history?")) {
+          localStorage.removeItem("chatHistory");
+          const messagesDiv = document.getElementById("chat-messages");
+          messagesDiv.innerHTML = "";
+          showToast("✅ Chat cleared.");
+        }
+      }
     </script>
   </body>
 </html>

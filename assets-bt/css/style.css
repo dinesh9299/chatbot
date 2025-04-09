@@ -1093,7 +1093,7 @@ a:active {
        -o-transition-duration: 0.5s;
           transition-duration: 0.5s; */
 
-  background: #e1e6eb;
+  /* background: #e1e6eb; */
   color: white;
   width: 50px;
   height: 50px;
@@ -1103,7 +1103,7 @@ a:active {
   align-items: center;
   font-size: 24px;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); */
 }
 
 .chatbot-container {
